@@ -27,3 +27,5 @@ jobs:
           name: karak-web-pages
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: karak-web-pages
