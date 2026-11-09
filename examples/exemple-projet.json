@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "audioPath": "",
+  "audioLatencyMs": 0,
+  "lyricsRaw": "On écrit en grand\nOn cherche les mots\nLa classe répond\nEt le refrain revient",
+  "maskMode": "manual",
+  "maskPercent": 40,
+  "maskMinLength": 6,
+  "activeLine": 0,
+  "lines": [
+    {
+      "text": "On écrit en grand",
+      "manualMask": [false, true, false, true],
+      "autoMaskPercent": [],
+      "autoMaskLength": [],
+      "lineHidden": false,
+      "timestamp": ""
+    },
+    {
+      "text": "On cherche les mots",
+      "manualMask": [false, true, false, true],
+      "autoMaskPercent": [],
+      "autoMaskLength": [],
+      "lineHidden": false,
+      "timestamp": ""
+    },
+    {
+      "text": "La classe répond",
+      "manualMask": [false, true, true],
+      "autoMaskPercent": [],
+      "autoMaskLength": [],
+      "lineHidden": false,
+      "timestamp": ""
+    },
+    {
+      "text": "Et le refrain revient",
+      "manualMask": [false, false, true, true],
+      "autoMaskPercent": [],
+      "autoMaskLength": [],
+      "lineHidden": false,
+      "timestamp": ""
+    }
+  ]
+}

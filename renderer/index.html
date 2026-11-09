@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; media-src file:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'" />
+  <title>KaraK</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <strong class="brand-name">KaraK</strong>
+        <span id="projectLabel" class="brand-tag">Nouveau projet</span>
+      </div>
+      <div class="project-controls" aria-label="Projet">
+        <button id="newProjectBtn" class="ghost">Nouveau</button>
+        <button id="openProjectBtn" class="ghost">Ouvrir…</button>
+        <button id="saveProjectBtn" class="ghost">Enregistrer</button>
+        <button id="saveAsProjectBtn" class="ghost">Enregistrer sous…</button>
+      </div>
+      <button id="gameModeBtn">Projeter ▸</button>
+    </header>
+
+    <main class="main">
+      <section id="editMode" class="mode active" aria-label="Préparation">
+        <div class="columns">
+          <div class="panel left">
+            <section class="section">
+              <h2><span class="step">1</span> Choisir l’audio</h2>
+              <div class="audio-row">
+                <button id="loadAudioBtn" class="ghost">Choisir un fichier…</button>
+                <div id="audioPathLabel" class="path-label">Aucun fichier audio</div>
+              </div>
+              <div class="audio-controls">
+                <button id="playPauseBtn" class="ghost">Lire</button>
+                <input id="audioScrub" type="range" min="0" max="0" value="0" step="0.05" aria-label="Position de lecture" />
+                <span id="audioTime" class="audio-time">00:00 / 00:00</span>
+              </div>
+              <details class="options">
+                <summary>Réglage de lecture</summary>
+                <label class="inline-input">
+                  Délai avant lecture (ms)
+                  <input id="audioLatencyInput" type="number" min="0" max="60000" step="50" value="0" />
+                </label>
+              </details>
+              <audio id="audioPlayer" preload="metadata"></audio>
+            </section>
+
+            <section class="section lyrics-section">
+              <h2><label for="lyricsTextarea"><span class="step">2</span> Ajouter les paroles</label></h2>
+              <p class="hint">Collez les paroles, une phrase par ligne. Répétez les refrains dans l’ordre du morceau.</p>
+              <textarea id="lyricsTextarea" placeholder="Heute singen wir zusammen…"></textarea>
+              <div class="lyrics-import">
+                <button id="importTextBtn" class="ghost">Importer un .txt…</button>
+                <button id="segmentBtn" class="ghost">Actualiser les lignes</button>
+                <button id="clearLyricsBtn" class="text-button">Vider</button>
+              </div>
+              <label class="toggle">
+                <input id="autoSegmentToggle" type="checkbox" checked />
+                <span>Actualiser les lignes pendant la saisie</span>
+              </label>
+            </section>
+
+            <section class="section">
+              <h2><span class="step">4</span> Créer des mots à deviner</h2>
+              <p class="hint">Cliquez sur les mots à cacher dans la liste. Les mots masqués sont en rose.</p>
+              <details class="options">
+                <summary>Règles de masquage</summary>
+                <div class="mask-rules">
+                  <label class="mask-rule"><input type="radio" name="maskMode" id="maskManual" checked /> À la main</label>
+                  <div class="mask-rule">
+                    <input type="radio" name="maskMode" id="maskPercent" />
+                    <label for="maskPercent">Par pourcentage</label>
+                    <input id="maskPercentInput" type="number" min="0" max="100" value="40" aria-label="Pourcentage de mots à masquer par ligne" /> %
+                  </div>
+                  <div class="mask-rule">
+                    <input type="radio" name="maskMode" id="maskLength" />
+                    <label for="maskLength">Mots de plus de</label>
+                    <input id="maskLengthInput" type="number" min="1" value="6" aria-label="Longueur des mots" /> lettres
+                  </div>
+                  <div class="mask-actions">
+                    <button id="maskAllBtn" class="ghost">Masquer tout</button>
+                    <button id="revealAllBtn" class="ghost">Tout révéler</button>
+                  </div>
+                </div>
+              </details>
+            </section>
+          </div>
+
+          <section class="panel right" aria-labelledby="lineHeading">
+            <div class="section sync-section">
+              <div class="line-header">
+                <h2 id="lineHeading"><span class="step">3</span> Caler les paroles sur l’audio</h2>
+                <span id="lineCount" class="count"></span>
+              </div>
+              <p class="hint">Analysez l’audio pour proposer des repères, ou lancez la lecture et cliquez sur « Marquer » au début d’une ligne.</p>
+              <div class="alignment-controls">
+                <label for="alignmentLanguage">Langue</label>
+                <select id="alignmentLanguage">
+                  <option value="auto">Détecter</option>
+                  <option value="de">Allemand</option>
+                  <option value="fr">Français</option>
+                  <option value="en">Anglais</option>
+                  <option value="it">Italien</option>
+                  <option value="es">Espagnol</option>
+                </select>
+                <button id="autoAlignBtn">Proposer les repères</button>
+                <button id="cancelAlignBtn" class="ghost" hidden>Annuler</button>
+                <button id="applyAlignBtn" hidden>Appliquer</button>
+                <button id="undoAlignBtn" class="ghost" hidden>Annuler le calage</button>
+              </div>
+              <p id="alignmentStatus" class="hint" aria-live="polite">Analyse sur ce Mac. Les repères déjà saisis sont conservés.</p>
+              <label class="toggle">
+                <input id="syncToggle" type="checkbox" />
+                <span>En projection, suivre l’audio</span>
+              </label>
+            </div>
+            <div id="lineList" class="line-list" aria-label="Lignes des paroles"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="gameMode" class="mode" tabindex="-1" aria-label="Projection">
+        <div class="game-top">
+          <button id="editModeBtn" class="ghost">‹ Préparation <kbd>Échap</kbd></button>
+          <span id="gameProgress"></span>
+          <button id="fullscreenBtn" class="ghost">Plein écran <kbd>F</kbd></button>
+        </div>
+        <div class="game-container">
+          <div class="game-line prev" id="gamePrevLine"></div>
+          <div class="game-line active" id="gameActiveLine"></div>
+          <div class="game-line next" id="gameNextLine"></div>
+        </div>
+        <div class="game-overlay">
+          <div class="game-audio">
+            <button id="gamePlayBtn" class="ghost">Lire <kbd>Espace</kbd></button>
+            <input id="gameScrub" type="range" min="0" max="0" value="0" step="0.05" aria-label="Position de lecture" />
+            <span id="gameTime" class="audio-time">00:00 / 00:00</span>
+          </div>
+          <div class="game-actions">
+            <button id="prevLineBtn" class="ghost">Précédente <kbd>←</kbd></button>
+            <button id="nextLineBtn" class="ghost">Suivante <kbd>→</kbd></button>
+            <button id="revealWordBtn" class="ghost">Révéler un mot <kbd>R</kbd></button>
+            <button id="gameRevealAllBtn" class="ghost">Tout révéler <kbd>T</kbd></button>
+            <button id="gameRemaskBtn" class="ghost">Remasquer <kbd>H</kbd></button>
+          </div>
+          <div class="game-status" id="gameStatus" role="status"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="statusbar">
+      <div id="statusMessage" role="status">Choisissez un fichier audio ou ouvrez un projet.</div>
+      <span class="creator-credit">Créé par S. Bovat</span>
+    </footer>
+  </div>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>

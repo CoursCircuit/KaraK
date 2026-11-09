@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+assets/alignment/whisper-cli
+assets/alignment/*.bin
