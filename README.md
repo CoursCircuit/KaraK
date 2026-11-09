@@ -1,6 +1,12 @@
 # KaraK
 
+[Utiliser KaraK dans le navigateur](https://courscircuit.github.io/KaraK/) · [Télécharger l’application Mac](https://github.com/CoursCircuit/KaraK/releases/download/v1.3.0/KaraK-1.3.0-arm64.dmg)
+
 KaraK est une application de karaoké pédagogique pour préparer des paroles à trous et les projeter en classe. Elle permet d’importer une piste audio et des paroles, de masquer des mots et de proposer des repères temporels grâce à une reconnaissance vocale exécutée localement.
+
+## Version Web
+
+La [webapp KaraK](https://courscircuit.github.io/KaraK/) fonctionne dans un navigateur récent. L’audio est lu dans l’onglet et reste sur votre appareil. Les projets s’exportent en JSON ; à leur réouverture, choisissez à nouveau le fichier audio correspondant. Le calage des lignes se fait manuellement avec **Marquer** ; la reconnaissance Whisper automatique est réservée à l’application Mac.
 
 ## Télécharger et installer
 
