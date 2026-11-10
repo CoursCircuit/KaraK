@@ -42,4 +42,6 @@ Le script télécharge les sources de whisper.cpp, compile son moteur et téléc
 
 Le code de KaraK est proposé sous [licence MIT](LICENSE). Le moteur [whisper.cpp](https://github.com/ggml-org/whisper.cpp) et le modèle [Whisper](https://github.com/openai/whisper) possèdent leurs propres mentions MIT, conservées dans [assets/alignment](assets/alignment/). Les composants Electron et leurs dépendances restent soumis à leurs licences respectives.
 
+Cette application a été vibe codée par un non-développeur, à l’origine pour ses propres besoins.
+
 *Créé par S. Bovat*
